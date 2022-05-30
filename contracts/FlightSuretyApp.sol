@@ -189,11 +189,12 @@ contract FlightSuretyApp {
         address _airlineAccount,
         string calldata _airlineName
     )
-    external
-    requireIsOperational
-    requireIsAirline
-    requireIsAirlineFunded
-    returns(bool success, uint256 votes) {
+        external
+        requireIsOperational
+        requireIsAirline
+        requireIsAirlineFunded
+        returns(bool success, uint256 votes) 
+    {
         require(!isAirline(_airlineAccount), "Airline is already registered");
         success = false;
         votes = 0;
@@ -220,11 +221,13 @@ contract FlightSuretyApp {
     function registerFlight(
         string calldata _airlineName,
         uint256 _timestamp
-    ) external
-    requireIsOperational
-    requireIsAirline
-    requireIsAirlineFunded
-    requireIsFutureFlight(_timestamp) {
+    ) 
+        external
+        requireIsOperational
+        requireIsAirline
+        requireIsAirlineFunded
+        requireIsFutureFlight(_timestamp) 
+    {
         bytes32 flightKey = getFlightKey(msg.sender, _airlineName, _timestamp);
         flights[flightKey] = Flight(
             true,
@@ -245,7 +248,8 @@ contract FlightSuretyApp {
         uint256 _timestamp,
         uint8 _statusCode
     )
-    internal {
+        internal 
+    {
         bytes32 flightKey = getFlightKey(_airlineAccount, _airlineName, _timestamp);
         flights[flightKey].updatedTimestamp = block.timestamp;
         flights[flightKey].statusCode = _statusCode;
@@ -256,7 +260,9 @@ contract FlightSuretyApp {
         address _airlineAccount,
         string calldata _airlineName,
         uint256 _timestamp
-    ) external {
+    ) 
+        external 
+    {
         uint8 index = getRandomIndex(msg.sender);
         // Generate a unique key for storing the request
         bytes32 key = keccak256(abi.encodePacked(index, _airlineAccount, _airlineName, _timestamp));
@@ -275,9 +281,11 @@ contract FlightSuretyApp {
         address _airlineAccount,
         string calldata _airlineName,
         uint256 _timestamp
-    ) external
-    payable
-    requireIsOperational {
+    ) 
+        external
+        payable
+        requireIsOperational 
+    {
         require(!isAirline(msg.sender), "Caller is airline itself");
         require(block.timestamp < _timestamp, "Insurance is not before flight timestamp");
         require(msg.value <= MAX_INSURANCE_COST, "Value sent by caller is above insurance cost");

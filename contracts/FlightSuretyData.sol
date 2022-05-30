@@ -233,8 +233,9 @@ contract FlightSuretyData {
         string calldata _airlineName,
         uint256 _timestamp
     )
-    external
-    payable {
+        external
+        payable 
+    {
         bytes32 flightKey = getFlightKey(_airlineAccount, _airlineName, _timestamp);
         airlines[_airlineAccount].fund = airlines[_airlineAccount].fund.add(msg.value);
         insurances[flightKey].push(
@@ -326,9 +327,10 @@ contract FlightSuretyData {
         string memory flight,
         uint256 timestamp
     )
-    pure
-    internal
-    returns(bytes32) {
+        pure
+        internal
+        returns(bytes32) 
+    {
         return keccak256(abi.encodePacked(airline, flight, timestamp));
     }
 
@@ -339,9 +341,10 @@ contract FlightSuretyData {
     function isAirline(
         address _airlineAccount
     )
-    external
-    view
-    returns(bool) {
+        external
+        view
+        returns(bool) 
+    {
         return airlines[_airlineAccount].isRegistered == true;
     }
 
@@ -352,10 +355,11 @@ contract FlightSuretyData {
     function isAirlineFunded(
         address _airlineAccount
     )
-    external
-    view
-    requireIsCallerAuthorized
-    returns(bool) {
+        external
+        view
+        requireIsCallerAuthorized
+        returns(bool) 
+    {
         return airlines[_airlineAccount].isFunded == true;
     }
 
@@ -364,10 +368,12 @@ contract FlightSuretyData {
      */
     function getFund(
         address _airlineAccount
-    ) external
-    view
-    requireIsCallerAuthorized
-    returns(uint256) {
+    ) 
+        external
+        view
+        requireIsCallerAuthorized
+        returns(uint256) 
+    {
         return airlines[_airlineAccount].fund;
     }
 
@@ -376,9 +382,10 @@ contract FlightSuretyData {
      *
      */
     function getAirlinesCount()
-    external
-    view
-    returns(uint256) {
+        external
+        view
+        returns(uint256) 
+    {
         return airlinesCount;
     }
 
@@ -391,9 +398,11 @@ contract FlightSuretyData {
         address _airlineAccount,
         string calldata _airlineName,
         uint256 _timestamp
-    ) external
-    view
-    returns(uint256 amountPaid) {
+    ) 
+        external
+        view
+        returns(uint256 amountPaid) 
+    {
         amountPaid = 0;
         bytes32 flightKey = getFlightKey(_airlineAccount, _airlineName, _timestamp);
         for (uint i = 0; i < insurances[flightKey].length; i++) {
